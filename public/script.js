@@ -29,7 +29,8 @@ $(function () {
 
 $(document).ready(function () {
   $("#valorPropiedadUf").keyup(function () {
-    var value = Math.round($(this).val()*26890.15);
+    var value = $(this).val().replace(/\./g,"");
+    value = Math.round(value*26890.15);
     value = value.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g,"$1.");
     value = value.split("").reverse().join("").replace(/^[\.]/,"");
     $("#valorPropiedadPesos").val(value);
@@ -42,7 +43,8 @@ $(document).ready(function () {
   });
 
   $("#valorPieUf").keyup(function () {
-    var value = Math.round($(this).val()*26890.15);
+    var value = $(this).val().replace(/\./g,"");
+    value = Math.round(value*26890.15);
     value = value.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g,"$1.");
     value = value.split("").reverse().join("").replace(/^[\.]/,"");
     $("#valorPiePesos").val(value);
