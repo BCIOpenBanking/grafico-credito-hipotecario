@@ -3,6 +3,9 @@
   <title>Simula un Crédito Hipotecario</title>
   <link rel="stylesheet" href="style.css" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js"></script>
+  <script type="text/javascript" src="script.js"></script>
 </head>
 <body>
   <div class="row">
@@ -27,13 +30,13 @@
             <div class="col s3">
               UF
               <div class="input-field inline" style="width: 110px;">
-                <input class="box" type="text" id="valorPropiedadUf" name="valorPropiedadUf">
+                <input class="box" type="text" id="valorPropiedadUf" onkeyup="miles(this)" name="valorPropiedadUf">
               </div>
             </div>
             <div class="col s4">
               $
               <div class="input-field inline" style="width: 177px;">
-                <input class="box" type="text" id="valorPropiedadPesos">
+                <input class="box" type="text" id="valorPropiedadPesos" onkeyup="miles(this)">
               </div>
             </div>
             <div class="input-field col s1"></div>
@@ -46,13 +49,13 @@
             <div class="col s3">
               UF
               <div class="input-field inline" style="width: 110px;">
-                <input class="box" type="text" id="valorPieUf" name="valorPieUf">
+                <input class="box" type="text" id="valorPieUf" onkeyup="miles(this)" name="valorPieUf">
               </div>
             </div>
             <div class="col s4">
               $
               <div class="input-field inline" style="width: 177px;">
-                <input class="box" type="text" id="valorPiePesos">
+                <input class="box" type="text" id="valorPiePesos" onkeyup="miles(this)">
               </div>
             </div>
           </div>
@@ -62,6 +65,11 @@
               Periodo de Hipoteca
             </div>
             <div class="input-field col s6">
+              <select class="box">
+                <option value="5">5 años</option>
+                <option value="6">6 años</option>
+                <option value="7">7 años</option>
+              </select>
             </div>
             <div class="input-field col s1"></div>
           </div>
