@@ -13,3 +13,16 @@ function miles(numero){
 $(document).ready(function() {
   $('select').material_select();
 });
+
+$(function () {
+  var myChart = Highcharts.chart('pieFijo', {
+    chart: { type: 'line' },
+    title: { text: 'Gráfico' },
+    xAxis: {
+      title: { text: 'Años' },
+      categories: ['5', '10', '20', '25']},
+    yAxis: {
+      title: { text: 'Dividendo' }},
+    series: [{ data: datos }]
+  });
+});
