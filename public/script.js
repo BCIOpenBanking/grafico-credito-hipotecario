@@ -26,3 +26,31 @@ $(function () {
     series: [{ data: datos }]
   });
 });
+
+$(document).ready(function () {
+  $("#valorPropiedadUf").keyup(function () {
+    var value = Math.round($(this).val()*26890.15);
+    value = value.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g,"$1.");
+    value = value.split("").reverse().join("").replace(/^[\.]/,"");
+    $("#valorPropiedadPesos").val(value);
+  });
+  $("#valorPropiedadPesos").keyup(function () {
+    var value = $(this).val().replace(/\./g,"");
+    value = Math.round(value/26890.15*100)/100;
+    //value = value.replace(/\./,",");
+    $("#valorPropiedadUf").val(value);
+  });
+
+  $("#valorPieUf").keyup(function () {
+    var value = Math.round($(this).val()*26890.15);
+    value = value.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g,"$1.");
+    value = value.split("").reverse().join("").replace(/^[\.]/,"");
+    $("#valorPiePesos").val(value);
+  });
+  $("#valorPiePesos").keyup(function () {
+    var value = $(this).val().replace(/\./g,"");
+    value = Math.round(value/26890.15*100)/100;
+    //value = value.replace(/\./,",");
+    $("#valorPieUf").val(value);
+  });
+});
