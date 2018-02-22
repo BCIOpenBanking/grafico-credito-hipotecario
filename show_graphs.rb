@@ -27,12 +27,10 @@ get '/' do
   params["renta"] = 2100000
   puts params
   lista = []
-  j = 0
-  for i in [5,10,20,25] do #peticiones a la api recursivamente
-    params["plazo"]=i
+  [5, 10, 20, 25].each do |plazo|
+    params["plazo"] = plazo
     credito = BCI.hipotecario.simulate("23",params)
-    lista[j]=credito["dividendoTotal"].round(1)
-    j+=1
+    lista.push(credito["dividendoTotal"].round(1))
   end
   erb :graphic, locals: {datos: lista}
 end
