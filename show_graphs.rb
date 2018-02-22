@@ -27,7 +27,7 @@ get '/' do
   params["renta"] = 2100000
   puts params
   lista = []
-  [5, 10, 20, 25].each do |plazo|
+  [10, 15, 20, 25].each do |plazo|
     params["plazo"] = plazo
     credito = BCI.hipotecario.simulate("23",params)
     lista.push(credito["dividendoTotal"].round(1))

@@ -20,7 +20,7 @@ $(function () {
     title: { text: 'Gráfico' },
     xAxis: {
       title: { text: 'Años' },
-      categories: ['5', '10', '20', '25']},
+      categories: ['10', '15', '20', '25']},
     yAxis: {
       title: { text: 'Dividendo' }},
     series: [{ data: datos }]
