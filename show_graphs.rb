@@ -3,7 +3,7 @@ require 'sinatra'
 
 BCI = Bci::Client.new({ key: ENV['BCI_API_KEY'] })
 
-get '/' do
+def parametros params
   params["valorPropiedadUf"] = params["valorPropiedadUf"] || 4000.12
   begin
     params["montoCreditoUf"] = Integer(params["valorPropiedadUf"]) - Integer(params["valorPieUf"])
@@ -23,6 +23,10 @@ get '/' do
   params["emailCliente"] = "john.doe@example.com"
   params["fonoCliente"] = 2222222222
   params["renta"] = 2100000
+end
+
+get '/' do
+  parametros params
   lista = []
   [10, 15, 20, 25].each do |plazo|
     params["plazo"] = plazo
