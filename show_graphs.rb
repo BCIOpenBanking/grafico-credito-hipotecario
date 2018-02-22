@@ -32,5 +32,6 @@ get '/' do
     credito = BCI.hipotecario.simulate("23",params)
     lista.push(credito["dividendoTotal"].round(1))
   end
-  erb :graphic, locals: {datos: lista}
+  ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
+  erb :graphic, locals: {datos: lista, ufprice: ufprice}
 end
