@@ -4,13 +4,11 @@ require 'sinatra'
 BCI = Bci::Client.new({ key: ENV['BCI_API_KEY'] })
 
 get '/' do
-  if params["valorPropiedadUf"] == nil or params["valorPieUf"] == nil
-    if params["valorPropiedadUf"] == nil
-      params["valorPropiedadUf"] = 4000.12
-    end
+  params["valorPropiedadUf"] = params["valorPropiedadUf"] || 4000.12
+  begin
+    params["montoCreditoUf"] = Integer(params["valorPropiedadUf"]) - Integer(params["valorPieUf"])
+  rescue
     params["montoCreditoUf"] = Integer(params["valorPropiedadUf"])*0.9
-  else
-    params["montoCreditoUf"]=Integer(params["valorPropiedadUf"])-Integer(params["valorPieUf"])
   end
   params["comuna"] = "Santiago Centro"
   params["region"] = "13"
@@ -25,7 +23,6 @@ get '/' do
   params["emailCliente"] = "john.doe@example.com"
   params["fonoCliente"] = 2222222222
   params["renta"] = 2100000
-  puts params
   lista = []
   [10, 15, 20, 25].each do |plazo|
     params["plazo"] = plazo
