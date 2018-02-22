@@ -3,13 +3,7 @@ require 'sinatra'
 
 BCI = Bci::Client.new({ key: ENV['BCI_API_KEY'] })
 
-def parametros params
-  params["valorPropiedadUf"] = params["valorPropiedadUf"] || 4000.12
-  begin
-    params["montoCreditoUf"] = Integer(params["valorPropiedadUf"]) - Integer(params["valorPieUf"])
-  rescue
-    params["montoCreditoUf"] = Integer(params["valorPropiedadUf"])*0.9
-  end
+def default_values(params)
   params["comuna"] = "Santiago Centro"
   params["region"] = "13"
   params["indDfl2"] = true
@@ -26,7 +20,10 @@ def parametros params
 end
 
 get '/' do
-  parametros params
+  params["valorPropiedadUf"] ||= 4000.12
+  params["valorPieUf"] ||= 400
+  params["montoCreditoUf"] = params["valorPropiedadUf"].to_i - params["valorPieUf"].to_i
+  default_values(params)
   lista = []
   [10, 15, 20, 25].each do |plazo|
     params["plazo"] = plazo
