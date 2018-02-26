@@ -31,5 +31,5 @@ get '/' do
     lista.push(credito["dividendoTotal"].round(1))
   end
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
-  erb :graphic, locals: {datos: lista, ufprice: ufprice}
+  erb :chart, locals: {datos: lista, ufprice: ufprice}
 end
