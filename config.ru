@@ -1,3 +1,3 @@
-require_relative 'show_graphs'
+require_relative 'show_chart'
 
 run Sinatra::Application
