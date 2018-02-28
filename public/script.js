@@ -10,9 +10,29 @@ function miles(numero){
   }
 }
 
-$(document).ready(function() {
-  $('select').material_select();
-});
+function validatemonto() {
+  var valorPropiedadUf = document.getElementById("valorPropiedadUf").value.replace(/\./g,"");
+  var valorPieUf = document.getElementById("valorPieUf");
+  var montoCredito = valorPropiedadUf - valorPieUf.value.replace(/\./g,"");
+
+  // Si Monto Credito es inferior a 550 UF
+  if (montoCredito < 550) {
+    valorPieUf.setCustomValidity("El monto del crédito debe ser mayor a 550 UF");
+    return false;
+  }
+  if (montoCredito*100/valorPropiedadUf > 90){
+    valorPieUf.setCustomValidity("El monto a solicitar debe ser menor al 90% de la propiedad");
+    return false;
+  }
+  valorPieUf.setCustomValidity("");
+  return true;
+}
+
+function deleteValidity(){
+  var valorPieUf = document.getElementById("valorPieUf");
+  valorPieUf.setCustomValidity("");
+}
+
 
 $(function () {
   var myChart = Highcharts.chart('pieFijo', {
@@ -40,7 +60,12 @@ $(function () {
   });
 });
 
-$(document).ready(function () {
+window.onload = function () {
+  document.getElementById("submit").onmouseover = validatemonto;
+  document.getElementById("submit").onmouseout = deleteValidity;
+  document.getElementById("valorPropiedadUf").onblur = validatemonto;
+  document.getElementById("valorPropiedadUf").onfocus = deleteValidity;
+  $('select').material_select();
   $("#valorPropiedadUf").keyup(function () {
     var value = $(this).val().replace(/\./g,"");
     value = Math.round(value*uf);
@@ -68,4 +93,4 @@ $(document).ready(function () {
     //value = value.replace(/\./,",");
     $("#valorPieUf").val(value);
   });
-});
+}
