@@ -25,7 +25,6 @@ get '/' do
   valores_dividendo = []
   credito = BCI.hipotecario.simulate(params)
   credito.each do |datos|
-    puts datos
     valores_dividendo.push(datos["dividendoTotal"].round(1))
   end
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
