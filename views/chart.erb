@@ -3,6 +3,7 @@
   <title>Simula un Crédito Hipotecario</title>
   <link rel="stylesheet" href="style.css" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -14,80 +15,83 @@
 </head>
 <body>
   <div class="row">
-    <div class="col s3"></div>
-    <div class="col s6">
+    <div class="col s1"></div>
+    <div class="col s10">
       <div class="row"></div>
       <div class="row"></div>
-      <div class="card">
-        <div class="cyan darken-2 col s12">
-          <div class="row"></div>
-          <div class="row"></div>
-          <h5 class="white-text center-align"><b>Simula un Crédito Hipotecario</b></h5>
-          <div class="row"></div>
-        </div>
-        <form>
-          <div class="row"></div>
-          <div class="row">
-            <div class="input-field col s1"></div>
-            <div class="input-field col s4">
-              Valor Total Propiedad
-            </div>
-            <div class="col s3">
-              UF
-              <div class="input-field inline" style="width: 110px;">
-                <input class="box" type="text" id="valorPropiedadUf" onkeyup="miles(this)" name="valorPropiedadUf">
-              </div>
-            </div>
-            <div class="col s4">
-              $
-              <div class="input-field inline" style="width: 177px;">
-                <input class="box" type="text" id="valorPropiedadPesos" onkeyup="miles(this)">
-              </div>
-            </div>
-            <div class="input-field col s1"></div>
+      <div class="border row">
+        <div class="card">
+          <div class="teal lighten-2 col s12">
+            <div class="row"></div>
+            <div class="row"></div>
+            <h5 class="white-text center-align"><b>Simula un Crédito Hipotecario</b></h5>
+            <div class="row"></div>
           </div>
-          <div class="row">
-            <div class="input-field col s1"></div>
-            <div class="input-field col s4">
-              Valor Pie
-            </div>
-            <div class="col s3">
-              UF
-              <div class="input-field inline" style="width: 110px;">
-                <input class="box" type="text" id="valorPieUf" onkeyup="miles(this)" name="valorPieUf">
+          <div class="col s6">
+            <form onsubmit="return validatemonto()" action="/sendVariables" method="POST">
+              <div class="row"></div>
+              <div class="row">
+                <div class="borderform input-field col s1"></div>
+                <div class="input-field col s4">
+                  Valor Total Propiedad
+                </div>
+                <div class="col s3">
+                  UF
+                  <div class="input-field inline" style="width: 83px;">
+                    <input class="box" type="text" id="valorPropiedadUf" onkeyup="miles(this)" name="valorPropiedadUf" required>
+                  </div>
+                </div>
+                <div class="col s4">
+                  $
+                  <div class="input-field inline" style="width: 135px;">
+                    <input class="box" type="text" id="valorPropiedadPesos" onkeyup="miles(this)">
+                  </div>
+                </div>
+                <div class="borderform input-field col s1"></div>
               </div>
-            </div>
-            <div class="col s4">
-              $
-              <div class="input-field inline" style="width: 177px;">
-                <input class="box" type="text" id="valorPiePesos" onkeyup="miles(this)">
+              <div class="row">
+                <div class="borderform input-field col s1"></div>
+                <div class="input-field col s4">
+                  Valor Pie
+                </div>
+                <div class="col s3">
+                  UF
+                  <div class="input-field inline" style="width: 83px;">
+                    <input class="box" type="text" id="valorPieUf" onkeyup="miles(this)" name="valorPieUf" required>
+                  </div>
+                </div>
+                <div class="col s4">
+                  $
+                  <div class="input-field inline" style="width: 135px;">
+                    <input class="box" type="text" id="valorPiePesos" onkeyup="miles(this)">
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="row">
+                <div class="borderform input-field col s1"></div>
+                <div class="input-field col s4">
+                  Periodo de Hipoteca
+                </div>
+                <div class="input-field col s7">
+                  <select disabled class="box">
+                    <option selected value="20">20 años</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="borderform input-field col s1"></div>
+                <div class="input-field col s11">
+                  <button class="waves-effect waves-light btn-large" id="submit" type="submit">Actualizar Gráfico<i class="material-icons right">send</i></button>
+                </div>
+              </div>
+            </form>
           </div>
-          <div class="row">
-            <div class="input-field col s1"></div>
-            <div class="input-field col s4">
-              Periodo de Hipoteca
-            </div>
-            <div class="input-field col s6">
-              <select class="box">
-                <option value="5">5 años</option>
-                <option value="6">6 años</option>
-                <option value="7">7 años</option>
-              </select>
-            </div>
-            <div class="input-field col s1"></div>
-          </div>
-        </form>
-        <div class="row">
-          <div class="col s12">
-            <div class="card-panel">
-              <div id="pieFijo" style="width:100%; height:400px;"></div>
-            </div>
+          <div class="col s6">
+            <div id="pieFijo" style="width:100%; height:400px;"></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col s3"></div>
+    <div class="col s1"></div>
   </div>
 </body>
