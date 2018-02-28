@@ -18,9 +18,9 @@ def default_values(params)
 end
 
 get '/' do
-  params["valorPropiedadUf"] ||= 4000.12
+  params["valorPropiedadUf"] ||= 4000
   params["valorPieUf"] ||= 400
-  params["montoCreditoUf"] = params["valorPropiedadUf"].to_i - params["valorPieUf"].to_i
+  params["montoCreditoUf"] = params["valorPropiedadUf"] - params["valorPieUf"]
   default_values(params)
   valores_dividendo = []
   credito = BCI.hipotecario.simulate(params)
@@ -29,4 +29,9 @@ get '/' do
   end
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
   erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice}
+end
+
+#para que al recargar la pagina no salga reenviar elementos
+post '/sendVariables' do
+  redirect '/'
 end
