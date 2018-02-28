@@ -16,14 +16,27 @@ $(document).ready(function() {
 
 $(function () {
   var myChart = Highcharts.chart('pieFijo', {
-    chart: { type: 'line' },
-    title: { text: 'Gráfico' },
+    chart: {
+      type: 'line'
+    },
+    title: {
+      text: 'Dividendo vs Plazo'
+    },
     xAxis: {
-      title: { text: 'Años' },
-      categories: ['15', '20', '25']},
+      title: {
+        text: 'Años'
+      },
+      categories: ['15', '20', '25']
+    },
     yAxis: {
-      title: { text: 'Dividendo' }},
-    series: [{ data: datos }]
+      title: {
+        text: 'Dividendo'
+      }
+    },
+    series: [{
+      name: 'Variación',
+      data: datos
+    }]
   });
 });
 
