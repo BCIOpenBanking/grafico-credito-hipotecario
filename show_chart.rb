@@ -20,7 +20,7 @@ end
 get '/' do
   params["valorPropiedadUf"] ||= 4000
   params["valorPieUf"] ||= 400
-  params["montoCreditoUf"] = params["valorPropiedadUf"] - params["valorPieUf"]
+  params["montoCreditoUf"] = params["valorPropiedadUf"].to_i - params["valorPieUf"].to_i
   default_values(params)
   valores_dividendo = []
   credito = BCI.hipotecario.simulate(params)
