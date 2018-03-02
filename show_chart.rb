@@ -28,6 +28,7 @@ get '/' do
     valores_dividendo.push(datos["dividendoTotal"].round(1))
   end
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
+  valores_dividendo = valores_dividendo.map { |value| value*ufprice }
   erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice}
 end
 
