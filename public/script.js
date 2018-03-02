@@ -42,6 +42,9 @@ $(function () {
     title: {
       text: 'Dividendo vs Plazo'
     },
+    legend: {
+      enabled: false
+    },
     xAxis: {
       title: {
         text: 'Años'
