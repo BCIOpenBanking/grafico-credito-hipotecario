@@ -10,11 +10,16 @@ function miles(numero){
   }
 }
 
+function milesInJs(numero){
+  numero = numero.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g,"$1.");
+  numero = numero.split("").reverse().join("").replace(/^[\.]/,"");
+  return numero;
+}
+
 function validatemonto() {
   var valorPropiedadUf = document.getElementById("valorPropiedadUf").value.replace(/\./g,"");
   var valorPieUf = document.getElementById("valorPieUf");
   var montoCredito = valorPropiedadUf - valorPieUf.value.replace(/\./g,"");
-
   // Si Monto Credito es inferior a 550 UF
   if (montoCredito < 550) {
     valorPieUf.setCustomValidity("El monto del crédito debe ser mayor a 550 UF");
@@ -68,6 +73,20 @@ window.onload = function () {
   document.getElementById("submit").onmouseout = deleteValidity;
   document.getElementById("valorPropiedadUf").onblur = validatemonto;
   document.getElementById("valorPropiedadUf").onfocus = deleteValidity;
+
+  if (propiedaduf != 0){
+    var inputpropiedaduf = document.getElementById("valorPropiedadUf");
+    var inputpropiedadpesos = document.getElementById("valorPropiedadPesos");
+    inputpropiedaduf.value = milesInJs(propiedaduf);
+    inputpropiedadpesos.value = milesInJs(propiedaduf*uf);
+  }
+
+  if (pieuf != 0){
+    var inputpieuf = document.getElementById("valorPieUf");
+    var inputpiepesos = document.getElementById("valorPiePesos");
+    inputpieuf.value = milesInJs(pieuf);
+    inputpiepesos.value = milesInJs(pieuf*uf);
+  }
   $('select').material_select();
   $("#valorPropiedadUf").keyup(function () {
     var value = $(this).val().replace(/\./g,"");
@@ -82,7 +101,6 @@ window.onload = function () {
     //value = value.replace(/\./,",");
     $("#valorPropiedadUf").val(value);
   });
-
   $("#valorPieUf").keyup(function () {
     var value = $(this).val().replace(/\./g,"");
     value = Math.round(value*uf);
