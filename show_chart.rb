@@ -3,8 +3,8 @@ require 'sinatra'
 
 BCI = Bci::Client.new({ key: ENV['BCI_API_KEY'] })
 
-@@propiedaduf = 0
-@@pieuf = 0
+@@propiedaduf = 4000
+@@pieuf = 400
 
 def default_values(params)
   params["codProducto"] = 12
@@ -20,10 +20,10 @@ def default_values(params)
   params["plazo"] = 20
 end
 
-def call_to_api(params)
-  params["valorPropiedadUf"] ||= 4000
-  params["valorPieUf"] ||= 400
-  params["montoCreditoUf"] = params["valorPropiedadUf"].to_i - params["valorPieUf"].to_i
+def call_to_api()
+  params["valorPropiedadUf"] = @@propiedaduf
+  params["valorPieUf"] = @@pieuf
+  params["montoCreditoUf"] = params["valorPropiedadUf"] - params["valorPieUf"]
   default_values(params)
   valores_dividendo = []
   credito = BCI.hipotecario.simulate(params)
@@ -34,7 +34,7 @@ def call_to_api(params)
 end
 
 get '/' do
-  valores_dividendo = call_to_api(params)
+  valores_dividendo = call_to_api()
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
   valores_dividendo.map! { |value| (value*ufprice).round() }
   erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice, propiedaduf: @@propiedaduf, pieuf: @@pieuf}
