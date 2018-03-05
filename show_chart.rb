@@ -3,6 +3,9 @@ require 'sinatra'
 
 BCI = Bci::Client.new({ key: ENV['BCI_API_KEY'] })
 
+@@propiedaduf = 0
+@@pieuf = 0
+
 def default_values(params)
   params["codProducto"] = 12
   params["comuna"] = "Santiago Centro"
@@ -28,11 +31,13 @@ get '/' do
     valores_dividendo.push(datos["dividendoTotal"].round(1))
   end
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
-  valores_dividendo = valores_dividendo.map { |value| value*ufprice }
-  erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice}
+  valores_dividendo.map! { |value| value*ufprice }
+  erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice, propiedaduf: @@propiedaduf, pieuf: @@pieuf}
 end
 
 #para que al recargar la pagina no salga reenviar elementos
 post '/sendVariables' do
+  @@propiedaduf = params["valorPropiedadUf"].gsub(/\./,"").to_i
+  @@pieuf = params["valorPieUf"].gsub(/\./,"").to_i
   redirect '/'
 end
