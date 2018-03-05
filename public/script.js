@@ -16,7 +16,7 @@ function milesInJs(numero){
   return numero;
 }
 
-function validatemonto() {
+function validateMonto() {
   var valorPropiedadUf = document.getElementById("valorPropiedadUf").value.replace(/\./g,"");
   var valorPieUf = document.getElementById("valorPieUf");
   var montoCredito = valorPropiedadUf - valorPieUf.value.replace(/\./g,"");
@@ -39,13 +39,13 @@ function deleteValidity(){
 }
 
 function activatePreloader(){
-  if (validatemonto()){
+  if (validateMonto()){
     var preloader = document.getElementById("preloader");
     var chart = document.getElementById("pieFijo");
     chart.style = "display:none";
     preloader.style = "";
   }
-  return validatemonto();
+  return validateMonto();
 }
 
 
@@ -79,9 +79,9 @@ $(function () {
 });
 
 window.onload = function () {
-  document.getElementById("submit").onmouseover = validatemonto;
+  document.getElementById("submit").onmouseover = validateMonto;
   document.getElementById("submit").onmouseout = deleteValidity;
-  document.getElementById("valorPropiedadUf").onblur = validatemonto;
+  document.getElementById("valorPropiedadUf").onblur = validateMonto;
   document.getElementById("valorPropiedadUf").onfocus = deleteValidity;
 
   if (propiedaduf != 0){
