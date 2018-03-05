@@ -34,7 +34,7 @@ def call_to_api
 end
 
 get '/' do
-  valores_dividendo = call_to_api()
+  valores_dividendo = call_to_api
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
   valores_dividendo.map! { |value| (value*ufprice).round() }
   erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice, propiedaduf: @@propiedaduf, pieuf: @@pieuf}
