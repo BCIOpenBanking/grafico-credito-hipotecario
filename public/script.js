@@ -38,6 +38,16 @@ function deleteValidity(){
   valorPieUf.setCustomValidity("");
 }
 
+function activatePreloader(){
+  if (validatemonto()){
+    var preloader = document.getElementById("preloader");
+    var chart = document.getElementById("pieFijo");
+    chart.style = "display:none";
+    preloader.style = "";
+  }
+  return validatemonto();
+}
+
 
 $(function () {
   var myChart = Highcharts.chart('pieFijo', {
