@@ -3,7 +3,13 @@ require 'sinatra'
 
 BCI = Bci::Client.new({ key: ENV['BCI_API_KEY'] })
 
+@@propiedaduf = 4000
+@@pieuf = 400
+
 def default_values(params)
+  params["valorPropiedadUf"] = @@propiedaduf
+  params["valorPieUf"] = @@pieuf
+  params["montoCreditoUf"] = params["valorPropiedadUf"] - params["valorPieUf"]
   params["codProducto"] = 12
   params["comuna"] = "Santiago Centro"
   params["region"] = "13"
@@ -17,17 +23,26 @@ def default_values(params)
   params["plazo"] = 20
 end
 
-get '/' do
-  params["valorPropiedadUf"] ||= 4000.12
-  params["valorPieUf"] ||= 400
-  params["montoCreditoUf"] = params["valorPropiedadUf"].to_i - params["valorPieUf"].to_i
+def call_to_api
   default_values(params)
   valores_dividendo = []
   credito = BCI.hipotecario.simulate(params)
   credito.each do |datos|
-    puts datos
     valores_dividendo.push(datos["dividendoTotal"].round(1))
   end
+  valores_dividendo
+end
+
+get '/' do
+  valores_dividendo = call_to_api
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
-  erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice}
+  valores_dividendo.map! { |value| (value*ufprice).round() }
+  erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice, propiedaduf: @@propiedaduf, pieuf: @@pieuf}
+end
+
+#para que al recargar la pagina no salga reenviar elementos
+post '/sendVariables' do
+  @@propiedaduf = params["valorPropiedadUf"].gsub(/\./,"").to_i
+  @@pieuf = params["valorPieUf"].gsub(/\./,"").to_i
+  redirect '/'
 end
