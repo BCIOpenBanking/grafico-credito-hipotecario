@@ -128,4 +128,6 @@ window.onload = function () {
     //value = value.replace(/\./,",");
     $("#valorPieUf").val(value);
   });
+  var select = document.getElementById("div_select").childNodes[1].childNodes[1];
+  select.style = "border-bottom:0px";
 }
