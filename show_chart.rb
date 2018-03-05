@@ -20,7 +20,7 @@ def default_values(params)
   params["plazo"] = 20
 end
 
-get '/' do
+def call_to_api(params)
   params["valorPropiedadUf"] ||= 4000
   params["valorPieUf"] ||= 400
   params["montoCreditoUf"] = params["valorPropiedadUf"].to_i - params["valorPieUf"].to_i
@@ -30,6 +30,11 @@ get '/' do
   credito.each do |datos|
     valores_dividendo.push(datos["dividendoTotal"].round(1))
   end
+  valores_dividendo
+end
+
+get '/' do
+  valores_dividendo = call_to_api(params)
   ufprice = BCI.stats.indicators['kpis'][0]['price'].gsub(/\./,"").to_f
   valores_dividendo.map! { |value| value*ufprice }
   erb :chart, locals: {datos: valores_dividendo, ufprice: ufprice, propiedaduf: @@propiedaduf, pieuf: @@pieuf}
