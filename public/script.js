@@ -97,6 +97,10 @@ window.onload = function () {
     inputpieuf.value = milesInJs(pieuf);
     inputpiepesos.value = milesInJs(pieuf*uf);
   }
+  var preloader = document.getElementById("preloader");
+  preloader.style = "display:none";
+  var chart = document.getElementById("pieFijo");
+  chart.style = "";
   $('select').material_select();
   $("#valorPropiedadUf").keyup(function () {
     var value = $(this).val().replace(/\./g,"");
