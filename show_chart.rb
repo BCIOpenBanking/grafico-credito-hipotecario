@@ -7,6 +7,9 @@ BCI = Bci::Client.new({ key: ENV['BCI_API_KEY'] })
 @@pieuf = 400
 
 def default_values(params)
+  params["valorPropiedadUf"] = @@propiedaduf
+  params["valorPieUf"] = @@pieuf
+  params["montoCreditoUf"] = params["valorPropiedadUf"] - params["valorPieUf"]
   params["codProducto"] = 12
   params["comuna"] = "Santiago Centro"
   params["region"] = "13"
@@ -20,10 +23,7 @@ def default_values(params)
   params["plazo"] = 20
 end
 
-def call_to_api()
-  params["valorPropiedadUf"] = @@propiedaduf
-  params["valorPieUf"] = @@pieuf
-  params["montoCreditoUf"] = params["valorPropiedadUf"] - params["valorPieUf"]
+def call_to_api
   default_values(params)
   valores_dividendo = []
   credito = BCI.hipotecario.simulate(params)
