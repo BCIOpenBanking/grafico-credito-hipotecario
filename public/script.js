@@ -48,6 +48,10 @@ function activatePreloader(){
   return validateMonto();
 }
 
+function decimalValue(str,p1,p2){
+  if (p2) return milesInJs(p1)+p2;
+  return milesInJs(p1);
+}
 
 $(function () {
   var myChart = Highcharts.chart('pieFijo', {
@@ -111,8 +115,8 @@ window.onload = function () {
   });
   $("#valorPropiedadPesos").keyup(function () {
     var value = $(this).val().replace(/\./g,"");
-    value = Math.round(value/uf*100)/100;
-    //value = value.replace(/\./,",");
+    value = String(Math.round(value/uf*100)/100).replace(/\./g,",");
+    value = value.replace(/(\d*)(,\d+)?/g,decimalValue);
     $("#valorPropiedadUf").val(value);
   });
   $("#valorPieUf").keyup(function () {
@@ -125,7 +129,8 @@ window.onload = function () {
   $("#valorPiePesos").keyup(function () {
     var value = $(this).val().replace(/\./g,"");
     value = Math.round(value/uf*100)/100;
-    //value = value.replace(/\./,",");
+    value = String(Math.round(value/uf*100)/100).replace(/\./g,",");
+    value = value.replace(/(\d*)(,\d+)?/g,decimalValue);
     $("#valorPieUf").val(value);
   });
   var select = document.getElementById("div_select").childNodes[1].childNodes[1];
