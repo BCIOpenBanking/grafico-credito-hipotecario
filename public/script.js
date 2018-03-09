@@ -1,13 +1,13 @@
 function miles(numero){
-  var num = numero.value.replace(/\./g,"");
-  if(!isNaN(num)){
-    num = num.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g,"$1.");
-    num = num.split("").reverse().join("").replace(/^[\.]/,"");
-    numero.value = num;
-  }
-  else{
-    numero.value = numero.value.replace(/[^\d\.]*/g,"");
-  }
+  var num = numero.value.replace(/[^\d\.,]/g,"");
+  num = num.replace(/\./g,"");
+  num = num.replace(/(\d*)(,\d*)?/g,decimalValue);
+  numero.value = num;
+}
+
+function decimalValue(str,p1,p2){
+  if (p2) return milesInJs(p1)+p2;
+  return milesInJs(p1);
 }
 
 function milesInJs(numero){
@@ -17,9 +17,9 @@ function milesInJs(numero){
 }
 
 function validateMonto() {
-  var valorPropiedadUf = document.getElementById("valorPropiedadUf").value.replace(/\./g,"");
+  var valorPropiedadUf = document.getElementById("valorPropiedadUf").value.replace(/\./g,"").replace(/,(\d*)/g,".$1");
   var valorPieUf = document.getElementById("valorPieUf");
-  var montoCredito = valorPropiedadUf - valorPieUf.value.replace(/\./g,"");
+  var montoCredito = valorPropiedadUf - valorPieUf.value.replace(/\./g,"").replace(/,(\d*)/g,".$1");
   // Si Monto Credito es inferior a 550 UF
   if (montoCredito < 550) {
     valorPieUf.setCustomValidity("El monto del crédito debe ser mayor a 550 UF");
@@ -47,7 +47,6 @@ function activatePreloader(){
   }
   return validateMonto();
 }
-
 
 $(function () {
   var myChart = Highcharts.chart('pieFijo', {
@@ -103,7 +102,7 @@ window.onload = function () {
   chart.style = "";
   $('select').material_select();
   $("#valorPropiedadUf").keyup(function () {
-    var value = $(this).val().replace(/\./g,"");
+    var value = $(this).val().replace(/\./g,"").replace(/,/g,"\.");
     value = Math.round(value*uf);
     value = value.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g,"$1.");
     value = value.split("").reverse().join("").replace(/^[\.]/,"");
@@ -111,12 +110,12 @@ window.onload = function () {
   });
   $("#valorPropiedadPesos").keyup(function () {
     var value = $(this).val().replace(/\./g,"");
-    value = Math.round(value/uf*100)/100;
-    //value = value.replace(/\./,",");
+    value = String(Math.round(value/uf*100)/100).replace(/\./g,",");
+    value = value.replace(/(\d*)(,\d*)?/g,decimalValue);
     $("#valorPropiedadUf").val(value);
   });
   $("#valorPieUf").keyup(function () {
-    var value = $(this).val().replace(/\./g,"");
+    var value = $(this).val().replace(/\./g,"").replace(/,/g,"\.");
     value = Math.round(value*uf);
     value = value.toString().split("").reverse().join("").replace(/(?=\d*\.?)(\d{3})/g,"$1.");
     value = value.split("").reverse().join("").replace(/^[\.]/,"");
@@ -124,8 +123,8 @@ window.onload = function () {
   });
   $("#valorPiePesos").keyup(function () {
     var value = $(this).val().replace(/\./g,"");
-    value = Math.round(value/uf*100)/100;
-    //value = value.replace(/\./,",");
+    value = String(Math.round(value/uf*100)/100).replace(/\./g,",");
+    value = value.replace(/(\d*)(,\d*)?/g,decimalValue);
     $("#valorPieUf").val(value);
   });
   var select = document.getElementById("div_select").childNodes[1].childNodes[1];
