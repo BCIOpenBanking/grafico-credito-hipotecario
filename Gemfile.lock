@@ -1,8 +1,13 @@
-GEM
-  remote: https://rubygems.org/
+GIT
+  remote: git://github.com/mpazvergara/SDKBCI_Ruby.git
+  revision: b898c2660813f98680725887c721517c4af45f28
   specs:
     bci (18.0.0)
       rest-client (>= 2.0.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     http-cookie (1.0.3)
@@ -34,7 +39,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bci
+  bci!
   puma
   sinatra
 
